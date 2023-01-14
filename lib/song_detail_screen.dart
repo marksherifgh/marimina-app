@@ -7,10 +7,10 @@ class SongDetailScreen extends StatelessWidget {
   SongDetailScreen({
     Key? key,
     required this.songName,
-    required this.songText,
+    required this.songLyrics,
   }) : super(key: key);
   String songName;
-  String songText;
+  String songLyrics;
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +32,7 @@ class SongDetailScreen extends StatelessWidget {
                 child: Container(
                   width: 360.w,
                   child: Text(
-                    songText,
+                    songLyrics,
                     style: TextStyle(
                         color: ConstantColors.textColor,
                         fontSize: ConstantFonts.listItemSize,height: 2.5),

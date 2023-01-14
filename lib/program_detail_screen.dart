@@ -3,8 +3,13 @@ import 'package:marimina_app/constants.dart';
 import 'package:marimina_app/widgets.dart';
 
 class ProgramDetailScreen extends StatelessWidget {
-  ProgramDetailScreen({Key? key, required this.dayName}) : super(key: key);
+  ProgramDetailScreen({
+    Key? key,
+    required this.dayName,
+    required this.firstPeriod,
+  }) : super(key: key);
   String dayName;
+  String firstPeriod;
 
   @override
   Widget build(BuildContext context) {
@@ -18,11 +23,6 @@ class ProgramDetailScreen extends StatelessWidget {
         child: Column(
           children: [
             titleWidget(dayName),
-            SingleChildScrollView(
-              child: Column(
-                children: [],
-              ),
-            ),
           ],
         ),
       ),
