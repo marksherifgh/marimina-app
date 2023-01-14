@@ -3,8 +3,15 @@ import 'package:marimina_app/constants.dart';
 import 'package:marimina_app/widgets.dart';
 
 class RetreatDetailScreen extends StatelessWidget {
-  RetreatDetailScreen({Key? key, required this.dayName}) : super(key: key);
+  RetreatDetailScreen({
+    Key? key,
+    required this.dayName,
+    required this.firstRetreat,
+    this.secondRetreat,
+  }) : super(key: key);
   String dayName;
+  String firstRetreat;
+  String? secondRetreat;
 
   @override
   Widget build(BuildContext context) {
@@ -18,11 +25,6 @@ class RetreatDetailScreen extends StatelessWidget {
         child: Column(
           children: [
             titleWidget(dayName),
-            SingleChildScrollView(
-              child: Column(
-                children: [],
-              ),
-            ),
           ],
         ),
       ),

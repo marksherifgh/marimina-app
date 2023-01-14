@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:marimina_app/constants.dart';
 import 'package:marimina_app/song_detail_screen.dart';
 import 'package:marimina_app/widgets.dart';
+import 'package:marimina_app/data/songs.dart';
 
 class SongsListScreen extends StatefulWidget {
   SongsListScreen({Key? key}) : super(key: key);
@@ -35,17 +36,16 @@ class _SongsListScreenState extends State<SongsListScreen> {
                     color: ConstantColors.navbarColor,
                   ),
                   itemBuilder: (context, index) {
+                    var name = songs[index]['name'] as String;
+                    var lyrics = songs[index]['lyrics'] as String;
                     return InkWell(
-                        onTap: () =>
-                            Navigator.of(context).push((MaterialPageRoute(
+                        onTap: () => Navigator.of(context).push(
+                            (MaterialPageRoute(
                                 builder: (_) => SongDetailScreen(
-                                      songName: 'اتخبني',
-                                      songText:
-                                          """Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum""",
-                                    )))),
-                        child: listChild('test'));
+                                    songName: name, songLyrics: lyrics)))),
+                        child: listChild(name));
                   },
-                  itemCount: 20,
+                  itemCount: songs.length,
                 ),
               )
             ],

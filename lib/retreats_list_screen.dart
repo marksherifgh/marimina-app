@@ -4,6 +4,8 @@ import 'package:marimina_app/constants.dart';
 import 'package:marimina_app/retreat_detail_screen.dart';
 import 'package:marimina_app/widgets.dart';
 
+import 'data/retreats.dart';
+
 class RetreatListScreen extends StatelessWidget {
   RetreatListScreen({Key? key}) : super(key: key);
 
@@ -24,15 +26,20 @@ class RetreatListScreen extends StatelessWidget {
                   color: ConstantColors.navbarColor,
                 ),
                 itemBuilder: (context, index) {
+                  var name = retreats[index]['name'] as String;
+                  var first = retreats[index]['first'] as String;
+                  var second = retreats[index]['second'] as String?;
                   return InkWell(
                       onTap: () =>
                           Navigator.of(context).push((MaterialPageRoute(
                               builder: (_) => RetreatDetailScreen(
-                                    dayName: 'اليوم الاول',
+                                    dayName: name,
+                                    firstRetreat: first,
+                                    secondRetreat: second,
                                   )))),
-                      child: listChild('اليوم الاول'));
+                      child: listChild(name));
                 },
-                itemCount: 20,
+                itemCount: retreats.length,
               ),
             )
           ],
