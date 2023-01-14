@@ -30,7 +30,7 @@ class SongDetailScreen extends StatelessWidget {
               child: SingleChildScrollView(
                 scrollDirection: Axis.vertical,
                 child: Container(
-                  width: 360.w,
+                  width: 370.w,
                   child: Text(
                     songLyrics,
                     style: TextStyle(
