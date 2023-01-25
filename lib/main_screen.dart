@@ -13,7 +13,8 @@ class MainScreen extends StatefulWidget {
   State<MainScreen> createState() => _MainScreenState();
 }
 
-class _MainScreenState extends State<MainScreen> {
+class _MainScreenState extends State<MainScreen>
+    with AutomaticKeepAliveClientMixin {
   final _pageController = PageController();
   int maxCount = 3;
   final List<Widget> bottomBarPages = [
@@ -21,6 +22,9 @@ class _MainScreenState extends State<MainScreen> {
     RetreatListScreen(),
     ProgramListScreen(),
   ];
+
+  @override
+  bool get wantKeepAlive => true;
 
   @override
   void dispose() {
@@ -48,7 +52,7 @@ class _MainScreenState extends State<MainScreen> {
               onTap: (index) {
                 _pageController.animateToPage(
                   index,
-                  duration: const Duration(milliseconds: 50),
+                  duration: const Duration(milliseconds: 1),
                   curve: Curves.easeIn,
                 );
               },

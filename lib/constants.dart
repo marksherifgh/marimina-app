@@ -5,7 +5,7 @@ class ConstantColors {
   static Color textColor = const Color(0xffffffff);
   static Color navbarColor = const Color(0xff144272);
   static Color selectedIconColor = const Color(0xffFFB74D);
-  static Color borderColor = const Color.fromRGBO(20, 66, 114, 0.3);
+  static Color searchColor = const Color.fromRGBO(20, 66, 114, 0.3);
 }
 
 class ConstantFonts {

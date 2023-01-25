@@ -14,21 +14,35 @@ class SongsListScreen extends StatefulWidget {
   State<SongsListScreen> createState() => _SongsListScreenState();
 }
 
-class _SongsListScreenState extends State<SongsListScreen> {
+class _SongsListScreenState extends State<SongsListScreen>
+    with AutomaticKeepAliveClientMixin {
+  late final Future future;
+
+  @override
+  bool get wantKeepAlive => true;
   TextEditingController searchController = TextEditingController();
   List songs = [];
   List searchSongs = [];
   bool isSearching = false;
 
   @override
+  void initState() {
+    super.initState();
+    future = loadSongs();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    searchController.selection = TextSelection.fromPosition(
+        TextPosition(offset: searchController.text.length));
+
     return GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: Container(
           color: ConstantColors.backgroundColor,
           child: Center(
               child: FutureBuilder(
-                  future: loadSongs(),
+                  future: future,
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
                       songs = snapshot.data as List;
@@ -47,18 +61,21 @@ class _SongsListScreenState extends State<SongsListScreen> {
                               ),
                               itemBuilder: (context, index) {
                                 var name = isSearching
-                                    ? searchSongs[index]['title']
-                                    : songs[index]['title'] as String;
+                                    ? searchSongs[index]['name']
+                                    : songs[index]['name'] as String;
                                 var lyrics = isSearching
-                                    ? getLyrics(searchSongs[index])
-                                    : getLyrics(songs[index]);
-                                return InkWell(
-                                    onTap: () => Navigator.of(context).push(
-                                        (MaterialPageRoute(
-                                            builder: (_) => SongDetailScreen(
-                                                songName: name,
-                                                songLyrics: lyrics)))),
-                                    child: listChild(name));
+                                    ? searchSongs[index]['lyrics']
+                                    : songs[index]['lyrics'];
+                                return Material(
+                                  color: Colors.transparent,
+                                  child: InkWell(
+                                      onTap: () => Navigator.of(context).push(
+                                          (MaterialPageRoute(
+                                              builder: (_) => SongDetailScreen(
+                                                  songName: name,
+                                                  songLyrics: lyrics)))),
+                                      child: listChild(name)),
+                                );
                               },
                               itemCount: isSearching
                                   ? searchSongs.length
@@ -73,47 +90,15 @@ class _SongsListScreenState extends State<SongsListScreen> {
         ));
   }
 
-  Widget searchBar() {
-    return Directionality(
-      textDirection: TextDirection.rtl,
-      child: Container(
-        height: 45.h,
-        margin: EdgeInsets.symmetric(horizontal: 24.w),
-        child: TextField(
-          style: const TextStyle(color: Colors.white),
-          controller: searchController,
-          onChanged: (value) => searchResults(value),
-          decoration: InputDecoration(
-            hintText: 'ابحث عن اسم الترنيمة...',
-            focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(20.r),
-                borderSide: BorderSide(color: ConstantColors.borderColor)),
-            hintStyle: const TextStyle(color: Colors.white),
-            prefixIcon: Icon(
-              Icons.search,
-              color: Colors.white,
-              size: 20.sp,
-            ),
-            filled: true,
-            fillColor: ConstantColors.navbarColor,
-            contentPadding: EdgeInsets.all(0.r),
-            enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(20.r),
-                borderSide: BorderSide(color: ConstantColors.borderColor)),
-          ),
-        ),
-      ),
-    );
-  }
-
   void searchResults(String query) {
+    query = query.toLowerCase();
     if (query != '') {
-      setState(() {
-        isSearching = true;
-        searchSongs = songs.where((song) {
-          return song['title'].contains(query);
-        }).toList();
-      });
+      isSearching = true;
+      searchSongs = songs.where((song) {
+        String name = song['name'].toLowerCase();
+        return name.contains(query);
+      }).toList();
+      setState(() {});
     } else {
       setState(() {
         isSearching = false;
@@ -121,40 +106,43 @@ class _SongsListScreenState extends State<SongsListScreen> {
     }
   }
 
+  Widget searchBar() {
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: Container(
+        height: 45.h,
+        margin: EdgeInsets.symmetric(horizontal: 24.w),
+        child: TextField(
+          textDirection: TextDirection.rtl,
+          style: const TextStyle(color: Colors.white),
+          controller: searchController,
+          onChanged: (value) => searchResults(value),
+          decoration: InputDecoration(
+            hintText: 'ابحث عن اسم الترنيمة...',
+            focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(20.r),
+                borderSide: BorderSide(color: ConstantColors.searchColor)),
+            hintStyle: const TextStyle(color: Colors.white54),
+            prefixIcon: Icon(
+              Icons.search,
+              color: Colors.white,
+              size: 20.sp,
+            ),
+            filled: true,
+            fillColor: ConstantColors.searchColor,
+            contentPadding: EdgeInsets.all(0.r),
+            enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(20.r),
+                borderSide: BorderSide(color: ConstantColors.searchColor)),
+          ),
+        ),
+      ),
+    );
+  }
+
   Future<List> loadSongs() async {
     var input = await rootBundle.loadString('assets/data/songs.json');
     List songs = jsonDecode(input);
     return songs;
-  }
-
-  String getLyrics(Map song) {
-    String lyrics = '';
-    List verses = song['verses'];
-    if (song.containsKey('formated') && song.containsKey('chorus')) {
-      String chorus = '';
-      for (int i = 0; i < song['chorus'].length; i++) {
-        chorus += song['chorus'][i];
-        if (i < song['chorus'].length) {
-          chorus += ' ';
-        }
-      }
-      if (song.containsKey('chorusFirst')) {
-        lyrics += chorus;
-      }
-      for (int i = 0; i < verses.length; i++) {
-        for (int j = 0; j < verses[i].length; j++) {
-          lyrics += ' ${verses[i][j]}';
-        }
-        lyrics += ' $chorus';
-      }
-    } else {
-      for (int i = 0; i < verses.length; i++) {
-        for (int j = 0; j < verses[i].length; j++) {
-          lyrics += ' ${verses[i][j]}';
-        }
-      }
-    }
-
-    return lyrics;
   }
 }
