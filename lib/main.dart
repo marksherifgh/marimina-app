@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:marimina_app/main_screen.dart';
+import 'package:marimina_app/splash_screen.dart';
 
 void main() {
   runApp(const MariminaApp());
@@ -17,7 +17,7 @@ class MariminaApp extends StatelessWidget {
       builder: (context, child) {
         return MaterialApp(
           title: 'Marimina App',
-          home: MainScreen(),
+          home: SplashScreen(),
         );
       },
     );

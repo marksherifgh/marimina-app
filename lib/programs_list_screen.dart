@@ -26,15 +26,15 @@ class ProgramListScreen extends StatelessWidget {
                 ),
                 itemBuilder: (context, index) {
                   var name = programs[index]['name'] as String;
-                  var firstPeriod = programs[index]['first'] as String;
+                  var program = programs[index]['program'] as List;
                   return InkWell(
                       onTap: () =>
                           Navigator.of(context).push((MaterialPageRoute(
                               builder: (_) => ProgramDetailScreen(
                                     dayName: name,
-                                    firstPeriod: firstPeriod,
+                                    program: program,
                                   )))),
-                      child: listChild('اليوم الاول'));
+                      child: listChild(name));
                 },
                 itemCount: programs.length,
               ),
