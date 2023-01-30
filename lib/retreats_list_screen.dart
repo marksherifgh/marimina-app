@@ -28,6 +28,8 @@ class RetreatListScreen extends StatelessWidget {
                 itemBuilder: (context, index) {
                   var name = retreats[index]['name'] as String;
                   var first = retreats[index]['first'] as String;
+                  var firstTitle = retreats[index]['first_title'] as String;
+                  var secondTitle = retreats[index]['second_title'] as String?;
                   var second = retreats[index]['second'] as String?;
                   return InkWell(
                       onTap: () =>
@@ -36,6 +38,8 @@ class RetreatListScreen extends StatelessWidget {
                                     dayName: name,
                                     firstRetreat: first,
                                     secondRetreat: second,
+                                firstTitle: firstTitle,
+                                secondTitle: secondTitle,
                                   )))),
                       child: listChild(name));
                 },

@@ -23,13 +23,13 @@ class SongDetailScreen extends StatelessWidget {
       body: Center(
         child: Column(
           children: [
-            titleWidget(songName),
+            SizedBox(width: 300,child: titleWidget(songName)),
             SizedBox(height: 30.h),
             Expanded(
               flex: 1,
               child: SingleChildScrollView(
                 scrollDirection: Axis.vertical,
-                child: Container(
+                child: SizedBox(
                   width: 370.w,
                   child: Text(
                     songLyrics,

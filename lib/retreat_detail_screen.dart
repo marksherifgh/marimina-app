@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:marimina_app/constants.dart';
 import 'package:marimina_app/widgets.dart';
 
@@ -7,10 +8,14 @@ class RetreatDetailScreen extends StatelessWidget {
     Key? key,
     required this.dayName,
     required this.firstRetreat,
+    required this.firstTitle,
     this.secondRetreat,
+    this.secondTitle,
   }) : super(key: key);
   String dayName;
   String firstRetreat;
+  String firstTitle;
+  String? secondTitle;
   String? secondRetreat;
 
   @override
@@ -25,6 +30,19 @@ class RetreatDetailScreen extends StatelessWidget {
         child: Column(
           children: [
             titleWidget(dayName),
+            Expanded(
+                flex: 1,
+                child: SingleChildScrollView(
+                    scrollDirection: Axis.vertical,
+                    child: Column(
+                      children: [
+                        retreatTitle(firstTitle),
+                        retreatBody(firstRetreat),
+                        SizedBox(height: 30.h),
+                        retreatTitle(secondTitle??''),
+                        retreatBody(secondRetreat??''),
+                      ],
+                    )))
           ],
         ),
       ),
