@@ -10,11 +10,8 @@ Widget titleWidget(String title) {
       color: ConstantColors.textColor,
       fontWeight: FontWeight.bold,
     ),
+    textAlign: TextAlign.center,
   );
-}
-
-Widget searchWidget() {
-  return Container();
 }
 
 Widget listChild(String text) {
@@ -26,6 +23,36 @@ Widget listChild(String text) {
         color: ConstantColors.textColor,
         fontSize: ConstantFonts.listItemSize,
       ),
+      textAlign: TextAlign.right,
+    ),
+  );
+}
+
+Widget retreatTitle(String text) {
+  return Container(
+    alignment: Alignment.centerRight,
+    margin: EdgeInsets.only(right: 40.w),
+    child: Text(
+      text,
+      style: TextStyle(
+          color: ConstantColors.textColor,
+          fontSize: 24.sp,
+          fontWeight: FontWeight.w700),
+      textAlign: TextAlign.right,
+    ),
+  );
+}
+Widget retreatBody(String text) {
+  return Container(
+    alignment: Alignment.centerRight,
+    margin: EdgeInsets.symmetric(horizontal: 40.w),
+    child: Text(
+      text,
+      style: TextStyle(
+          color: ConstantColors.textColor,
+          fontSize: 20.sp,
+          height: 1.5,
+          fontWeight: FontWeight.w400),
       textAlign: TextAlign.right,
     ),
   );

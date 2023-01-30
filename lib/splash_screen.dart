@@ -16,7 +16,7 @@ class SplashScreen extends StatelessWidget {
           children: [
             Image.asset('assets/vectors/logo.png'),
             Text(
-              'مؤتمر اسرة ماريمينا',
+              'مؤتمر اسرة مارمينا',
               style: TextStyle(
                 fontSize: ConstantFonts.titleSize,
                 color: ConstantColors.textColor,
